@@ -1,0 +1,6 @@
+venv
+__pycache__
+.vscode
+settings.json
+shape_predictor_81_face_landmarks.dat
+champ_select.webp

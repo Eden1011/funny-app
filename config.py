@@ -1,0 +1,72 @@
+import json
+
+
+class ConfigManager:
+    def __init__(self, config_path="config.json"):
+        self.config_path = config_path
+        self.config = self.load_config()
+
+    def load_config(self):
+        try:
+            with open(self.config_path, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Config file {self.config_path} not found, using defaults")
+            return self.get_default_config()
+
+    def get_default_config(self):
+        return {
+            "landmarks": {
+                "left_eye": {"start": 36, "end": 41},
+                "right_eye": {"start": 42, "end": 47},
+                "mouth": {"start": 48, "end": 67}
+            },
+            "regions": {
+                "left_eye": {"padding": 15},
+                "right_eye": {"padding": 15},
+                "mouth": {"padding": 20}
+            },
+            "colors": {
+                "left_eye_box": [255, 0, 0],
+                "right_eye_box": [0, 255, 255],
+                "mouth_box": [0, 0, 255],
+                "face_smiling": [0, 255, 0],
+                "face_not_smiling": [0, 0, 255],
+                "landmark_points": [0, 255, 0]
+            },
+            "windows": {
+                "positions": {
+                    "main_feed": [50, 50],
+                    "left_eye": [700, 50],
+                    "right_eye": [850, 50],
+                    "mouth": [700, 200],
+                    "smile_detection": [50, 400],
+                    "happiness_meter": [50, 650]
+                },
+                "sizes": {
+                    "left_eye": [300, 200],
+                    "right_eye": [300, 200],
+                    "mouth": [400, 300],
+                    "smile_detection": [400, 200],
+                    "happiness_meter": [500, 100]
+                }
+            },
+            "happiness": {
+                "decay_rate": 0.5,
+                "fill_rate": 0.5,
+                "start_value": 100.0,
+                "zero_action_delay": 5.0
+            },
+            "smile_detection": {
+                "mouth_ratio_threshold": 1.8,
+                "eyes_ratio_threshold": 2.3,
+                "mouth_ratio_divisor": 1.5
+            },
+            "display": {
+                "scale_factor": 5,
+                "flip_horizontal": True,
+                "meter_dimensions": [500, 100],
+                "smile_display_dimensions": [400, 200]
+            },
+            "predictor_path": "shape_predictor_81_face_landmarks.dat"
+        }
