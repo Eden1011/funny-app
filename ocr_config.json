@@ -1,0 +1,32 @@
+{
+    "region": {
+        "bottom_offset_ratio": 0.1,
+        "horizontal_center_ratio": 0.2,
+        "vertical_center_ratio": 4.0,
+        "top_trim_pixels": 42,
+        "bottom_trim_ratio": 0.92
+    },
+    "preprocessing": {
+        "contrast_alpha": 1.8,
+        "threshold_value": 180,
+        "invert_for_white_text": true,
+        "use_adaptive_threshold": true,
+        "enhance_contrast": true
+    },
+    "ocr": {
+        "config": "--psm 6",
+        "min_confidence": 20.0,
+        "scale_factor": 3
+    },
+    "text_processing": {
+        "min_word_length": 3,
+        "max_words": 4,
+        "common_skin_suffixes": [
+            "skin",
+            "chroma",
+            "prestige",
+            "edition",
+            "random"
+        ]
+    }
+}
