@@ -7,6 +7,7 @@ import json
 import time
 from chill import chill
 from config import *
+from funny import *
 
 
 class FaceRegionExtractor:
@@ -208,9 +209,9 @@ class SmileDisplay:
 
 
 class Therapist:
-    def __init__(self, config_path="config.json"):
+    def __init__(self, champion: str, config_path="config.json"):
         self.config_manager = ConfigManager(config_path)
-        self.config = self.config_manager.config
+        self.config = self.config_manager.get_therapy_config()
 
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor(self.config["predictor_path"])
@@ -224,6 +225,8 @@ class Therapist:
         self.last_update_time = time.time()
         self.zero_happiness_start_time = None
         self.zero_happiness_triggered = False
+
+        self.champion = champion
 
     def setup_windows(self):
         windows = ['Main Feed', 'Left Eye', 'Right Eye', 'Mouth', 'Smile Detection', 'Happiness Meter']
@@ -250,6 +253,7 @@ class Therapist:
 
     def zero_happiness_action(self):
         chill()
+        open_guide_for_champion(self.champion)
         exit(0)
 
     def update_happiness(self, is_smiling):

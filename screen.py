@@ -8,6 +8,7 @@ import subprocess
 import os
 from pathlib import Path
 import json
+from config import ConfigManager
 
 
 @dataclass
@@ -20,43 +21,9 @@ class ChampionDetectionResult:
 
 
 class ChampionNameExtractor:
-    def __init__(self, config_path: str = "ocr_config.json"):
-        self.config = self._load_config(config_path)
-
-    def _load_config(self, config_path: str) -> Dict[str, Any]:
-        try:
-            with open(config_path, "r") as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return self._get_default_config()
-
-    def _get_default_config(self) -> Dict[str, Any]:
-        return {
-            "region": {
-                "bottom_offset_ratio": 0.1,
-                "horizontal_center_ratio": 0.2,
-                "vertical_center_ratio": 4.0,
-                "top_trim_pixels": 50,
-                "bottom_trim_ratio": 0.7
-            },
-            "preprocessing": {
-                "contrast_alpha": 1.8,
-                "threshold_value": 180,
-                "invert_for_white_text": True,
-                "use_adaptive_threshold": True,
-                "enhance_contrast": True
-            },
-            "ocr": {
-                "config": "--psm 6",
-                "min_confidence": 20.0,
-                "scale_factor": 3
-            },
-            "text_processing": {
-                "min_word_length": 3,
-                "max_words": 4,
-                "common_skin_suffixes": ["skin", "chroma", "prestige", "edition", "random"]
-            }
-        }
+    def __init__(self, config_path: str = "config.json"):
+        self.config_manager = ConfigManager(config_path)
+        self.config = self.config_manager.get_champion_detection_config()
 
     def extract_champion_region(self, image: np.ndarray) -> np.ndarray:
         height, width = image.shape[:2]
@@ -322,22 +289,14 @@ class ChampionNameExtractor:
 
 
 class ChampionDetector:
-    def __init__(self, config_path: str = "ocr_config.json"):
+    def __init__(self, config_path: str = "config.json"):
         self.extractor = ChampionNameExtractor(config_path)
 
     def get_champion_from_file(self, screenshot_path: str) -> Optional[str]:
         result = self.extractor.detect_champion_from_screenshot(screenshot_path)
         return result.champion_name if result.success else None
 
-
-def create_default_config_file(config_path: str = "ocr_config.json") -> None:
-    extractor = ChampionNameExtractor()
-    with open(config_path, "w") as f:
-        json.dump(extractor.config, f, indent=4)
-
-
 if __name__ == "__main__":
     extractor = ChampionDetector()
     result = extractor.get_champion_from_file("champ_select.webp")
     print(result)
-    create_default_config_file()
