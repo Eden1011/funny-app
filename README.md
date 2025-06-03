@@ -5,7 +5,7 @@ Ever get so tilted playing League that you forget how to smile? Fear not!
 This silly effective system uses your webcam to watch for genuine smiles. When you stop smiling for too long, it kicks you out of League and opens YouTube guides to help you get better (for your specific champion, too!).
 
 
-
+https://github.com/Eden1011/funny-app/blob/master/demo.mp4
 
 ## Dependencies
 
