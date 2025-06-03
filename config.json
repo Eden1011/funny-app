@@ -43,7 +43,7 @@
         },
         "smile_detection": {
             "mouth_ratio_threshold": 1.8,
-            "eyes_ratio_threshold": 2.3,
+            "eyes_ratio_threshold": 2.5,
             "mouth_ratio_divisor": 1.5
         },
         "display": {
