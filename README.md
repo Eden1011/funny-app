@@ -250,7 +250,7 @@ if mean_intensity < 128:  # Dark background detected
 ```json
 "smile_detection": {
     "mouth_ratio_threshold": 1.8,
-    "eyes_ratio_threshold": 2.3,
+    "eyes_ratio_threshold": 2.5,
     "mouth_ratio_divisor": 1.5
 }
 ```
@@ -261,7 +261,7 @@ if mean_intensity < 128:  # Dark background detected
 - **Testing methodology**: Recorded genuine smiles versus speech/neutral expressions
 - **Operational range**: 1.5-2.2
 
-**`eyes_ratio_threshold: 2.3`**
+**`eyes_ratio_threshold: 2.5`**
 - **Purpose**: Minimum eye width/height ratio indicating squinting behavior
 - **Selection rationale**: Balances sensitivity with false positive prevention
 - **Key finding**: Genuine smiles consistently produce eye ratios exceeding 2.3

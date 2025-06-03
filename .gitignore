@@ -4,4 +4,3 @@ __pycache__
 settings.json
 shape_predictor_81_face_landmarks.dat
 .idea
-*.png
