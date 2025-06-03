@@ -58,7 +58,7 @@ The core concept: when you're obviously miserable (happiness hits zero), the sys
 
 **dlib with 81-point facial landmarks**
 - **Selection rationale**: Mature, reliable facial landmark detection for real-time shape detection
-- **Why 81 points over 68**: The additional landmarks are placed on the forehead, I personally dont use it, but it will help catch the face if the user is wearing a hat.
+- **Why 81 points over 68**: The additional landmarks are placed on the forehead. I personally don't use them, but it will help catch the face shape if the user is wearing a hat.
 - **Implementation role**: Face detection, precise landmark extraction, geometric feature calculation
 
 **NumPy**
@@ -70,7 +70,7 @@ The core concept: when you're obviously miserable (happiness hits zero), the sys
 **Tesseract OCR (pytesseract)**
 - **Selection rationale**: Most configurable open-source OCR engine with extensive parameter tuning options
 - **Implementation role**: Champion name extraction from screenshots with custom preprocessing just for League champ select
-- **Alternative considered**: EasyOCR (less configuration flexibility), AWS Textract ($$$$$$$$)
+- **Alternative considered**: EasyOCR (less configuration flexibility), AWS Textract (paid)
 
 **psutil**
 - **Implementation role**: Detection and termination of League of Legends client processes
@@ -89,10 +89,8 @@ for face in faces:
     # Extract regions of interest with appropriate padding
 ```
 
-**Why 81 points over 68**: Those additional 13 landmarks provide better face detection in hats. (Additional landmarks are on the forehead) 
-
 ### Challenge 2: Developing Reliable Smile Detection
-**The Problem**: Initial smile detection attempts were completely unreliable - triggering on speech, yawning, and other non-smile facial expressions.
+**The Problem**: Initial smile detection attempts were unreliable and jittery.
 
 **Evolution of the solution**:
 
@@ -172,7 +170,7 @@ def calculate_mouth_aspect_ratio(self, landmarks):
 
 **Threshold determination process**:
 - **Mouth threshold (1.8)**: Established through empirical testing with genuine versus forced smile samples
-- **Eye threshold (2.3)**: Balanced to detect squinting while avoiding false triggers from normal blinking
+- **Eye threshold (2.5)**: Balanced to detect squinting while avoiding false triggers from normal blinking
 - **Combined validation**: Both conditions must be satisfied simultaneously - prevents cheating
 
 **Formula**: Time-based system that changes gradually:
